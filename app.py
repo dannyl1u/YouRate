@@ -45,6 +45,7 @@ def get_number():
         videoId = video_id
     )
     response = comment_request.execute()
+    print(response)
 
     total_score = 0
     count = 0
