@@ -14,7 +14,10 @@ interface InputBoxProps {
       };
 
       const handleSubmit = () => {
-        fetch(`http://127.0.0.1:5000/number?video_id=${encodeURIComponent(inputValue)}`)
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        const baseURL = isDevelopment ? 'http://127.0.0.1:5000' : 'https://yourateapi.onrender.com';
+
+        fetch(`${baseURL}/number?video_id=${encodeURIComponent(inputValue)}`)
           .then((response) => response.json())
           .then((data) => {
             onNumberReceived(data);
