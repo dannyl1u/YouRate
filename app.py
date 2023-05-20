@@ -26,7 +26,6 @@ def get_number():
 
     api_service_name = "youtube"
     api_version = "v3"
-    
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey = DEVELOPER_KEY)
@@ -60,7 +59,8 @@ def get_number():
         
     print("AVERAGE SCORE = ")
     print(total_score/count)
-    return jsonify(total_score/count)
+    response = jsonify(total_score/count)
+    return response
 
 if __name__ == '__main__':
     app.run()
