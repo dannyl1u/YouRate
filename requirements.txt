@@ -1,0 +1,5 @@
+google-api-python-client
+textblob
+Flask
+Flask-Cors
+python-dotenv
