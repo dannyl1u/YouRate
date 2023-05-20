@@ -3,3 +3,4 @@ textblob
 Flask
 Flask-Cors
 python-dotenv
+gunicorn
