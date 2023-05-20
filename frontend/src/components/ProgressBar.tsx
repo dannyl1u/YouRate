@@ -5,8 +5,12 @@ interface ProgressBarProps {
 import ProgressBar from 'react-bootstrap/ProgressBar'
 const StackedExample = ({ score }: ProgressBarProps) => {
 
-    const percentage = (score + 1) * 50;
-    console.log(score)
+    const min_value = -0.05;
+    const max_value = 0.20;
+
+    const scaled_value = (((score - min_value) / (max_value - min_value)) * 2) - 1
+
+    const percentage = (scaled_value + 1) * 50;
     console.log(percentage);
     const percentageScrewed = (percentage*0.9);
     return (
