@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import InputBox from './components/InputBox';
 import NumberDisplay from './components/NumberDisplay';
 
