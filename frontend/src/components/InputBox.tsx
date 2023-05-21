@@ -27,7 +27,7 @@ interface InputBoxProps {
       return (
         <div>
           <h2>{headerText}</h2>
-          <input type="text" onChange={handleChange} placeholder="Enter below" />
+          <input type="text" onChange={handleChange} placeholder="e.g. https://www.youtube.com/watch?v=YHUv-oOMwRA&t=0s&ab_channel=REI" />
           <button onClick={handleSubmit}>Submit</button>
         </div>
       );
