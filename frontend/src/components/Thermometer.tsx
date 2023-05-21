@@ -19,7 +19,9 @@ const Thermometer = ({ score }: ThermometerProps) => {
     };
   
     return (
+      
 <div className='thermometer'>
+<h3>Sentiment</h3>
       <Chart
         chartType="Gauge"
         data={data}

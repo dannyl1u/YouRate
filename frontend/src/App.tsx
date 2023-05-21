@@ -43,7 +43,7 @@ function App(): JSX.Element {
       <br/>
       <br/>
       <div className='thermometer'>
-       <h3>Sentiment</h3> {number !== null && <Thermometer score={number} />}
+       {number !== null && <Thermometer score={number} />}
       </div>
       <br/> <br/>
       <div>
