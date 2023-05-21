@@ -3,11 +3,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+}
+
+.inputContainer {
+  margin-bottom: 20px;
+}
+
+.rowContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.column {
+  flex: 1 1 0;
+  min-width: 200px;
 }
 
 .thermometer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  display: inline-block;
+  margin: 0 auto;
 }
