@@ -3,3 +3,6 @@ textblob
 Flask
 Flask-Cors
 python-dotenv
+matplotlib
+pandas
+wordcloud
