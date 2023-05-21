@@ -60,7 +60,7 @@ interface InputBoxProps {
     
       return (
         <div>
-          <h2>{headerText}</h2>
+          <h4>{headerText}</h4>
           <input  style={{ width: "500px" }}  type="text" onChange={handleChange} placeholder="e.g. https://www.youtube.com/watch?v=YHUv-oOMwRA&t=0s&ab_channel=REI" />
           <button onClick={handleSubmit}>Enter</button>
         </div>
