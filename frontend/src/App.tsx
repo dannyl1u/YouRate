@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InputBox from './components/InputBox';
 import NumberDisplay from './components/NumberDisplay';
+import Button from './components/Button';
 import 'bootstrap/dist/css/bootstrap.css';
 
 

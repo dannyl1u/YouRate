@@ -1,0 +1,31 @@
+
+.button {
+    font: inherit;
+    font-weight: bold;
+    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 1rem 1.7rem;
+    background-color: red;
+    border-radius: 50px;
+    transition: scale 0.2s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+
+   
+    }
+
+    &:hover, &:focus-visible {
+        scale: 1.04;
+
+    }
+
+    &:active {
+        filter: brightness(70%);
+
+    }
+
+
