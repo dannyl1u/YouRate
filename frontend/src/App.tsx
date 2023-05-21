@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Thermometer from './components/Thermometer';
 import RatioComponent from './components/Ratio';
 import './App.css';
+import logo from './assets/Logo.png';
 
 function App(): JSX.Element {
   const [number, setNumber] = useState<number | null>(null);
@@ -36,6 +37,7 @@ function App(): JSX.Element {
   return (
     <div className='container'>
       <br/>
+      <img src={logo} alt="Logo" />
       <InputBox headerText="Enter a YouTube URL below:" onNumberReceived={handleNumberReceived} ratioNegative={handleNegativeRatio} ratioPositive={handlePositiveRatio} trend_list={handleTrendList} />
       <br/> <br/>
       {number !== null && <NumberDisplay number={number} />}
