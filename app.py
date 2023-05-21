@@ -1,5 +1,5 @@
 import os
-import io
+from io import BytesIO
 
 import googleapiclient.discovery
 import re
@@ -49,7 +49,7 @@ def get_number():
         videoId = video_id
     )
     response = comment_request.execute()
-    print(response)
+    # print(response)
 
     total_score = 0
     count = 0
@@ -97,10 +97,11 @@ def get_cloud():
         all_comments.append(text_display)
 
     stopwords = set(all_comments)
-    # iterate through the csv file
+    print(stopwords)
+    # iterate through the comments
     for val in all_comments:
         
-        # typecaste each val to string
+        # typecast each val to string
         val = str(val)
     
         # split the value
@@ -112,27 +113,21 @@ def get_cloud():
         
         comment_words += " ".join(tokens)+" "
     
-    # Create an in-memory buffer to save the plot as an image
-    img_buffer = io.BytesIO()
+    wordcloud = WordCloud(width=800, height=800,
+                          background_color='white',
+                          stopwords=stopwords,
+                          min_font_size=10).generate(comment_words)
 
-    wordcloud = WordCloud(width = 800, height = 800,
-                    background_color ='white',
-                    stopwords = stopwords,
-                    min_font_size = 10).generate(comment_words)
-    
-    # plot the WordCloud image                      
-    plt.figure(figsize = (8, 8), facecolor = None)
+    img_buffer = BytesIO()
+    plt.figure(figsize=(8, 8), facecolor=None)
     plt.imshow(wordcloud)
     plt.axis("off")
-    plt.tight_layout(pad = 0)
-    
-    plt.show()
-    # Save the plot as an image in the buffer
+    plt.tight_layout(pad=0)
+
     plt.savefig(img_buffer, format='png')
-    
-    # Reset the buffer position to the beginning
     img_buffer.seek(0)
 
+    # Return the image as a response
     return send_file(img_buffer, mimetype='image/png')
 
 

@@ -4,6 +4,7 @@ import NumberDisplay from './components/NumberDisplay';
 import StackedExample from './components/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Thermometer from './components/Thermometer';
+import WordCloud from './components/WordCloud';
 
 function App(): JSX.Element {
   const [number, setNumber] = useState<number | null>(null);
@@ -24,6 +25,10 @@ function App(): JSX.Element {
       <div className='thermometer'>
         {number !== null && <Thermometer score={number} />}
       </div>
+      <div>
+        <WordCloud />
+      </div>
+      
     </div>
     
   );
