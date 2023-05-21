@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import InputBox from './components/InputBox';
 import NumberDisplay from './components/NumberDisplay';
 import StackedExample from './components/ProgressBar';
@@ -11,7 +11,7 @@ function App(): JSX.Element {
   const [number, setNumber] = useState<number | null>(null);
   const [ratioNegative, setRatioNegative] = useState<number | null>(null);
   const [ratioPositive, setRatioPositive] = useState<number | null>(null);  
-  const [trendList, setTrendList] = useState<any | null>(null);
+  const [setTrendList] = useState<any | null>(null);
 
   const handleNumberReceived = (receivedNumber: number) => {
     console.log(receivedNumber);

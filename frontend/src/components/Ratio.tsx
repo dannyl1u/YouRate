@@ -14,7 +14,7 @@ const RatioComponent = ({ ratioNegative, ratioPositive }: RatioProps) => {
             <div>☹️ Negative Comments : {ratioNegative}</div>
             <Plot data={[
                 {type: 'bar', x: ['Positive', 'Negative'], y: [ratioPositive, ratioNegative]}
-            ]} />
+            ]} layout={ {width: 550, height: 400, title: 'Positive vs Negative'}} />
             </div>
     )
 

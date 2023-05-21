@@ -12,7 +12,6 @@ const StackedExample = ({ score }: ProgressBarProps) => {
 
     const percentage = (scaled_value + 1) * 50;
     console.log(percentage);
-    const percentageScrewed = (percentage*0.9);
     return (
         <ProgressBar>
         <ProgressBar striped variant="success" now={percentage} key={1} />
