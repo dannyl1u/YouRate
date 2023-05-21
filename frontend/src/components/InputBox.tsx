@@ -23,7 +23,10 @@ interface InputBoxProps {
       };
 
       const handleSubmit = () => {
-        fetch(`http://127.0.0.1:5000/number?video_id=${encodeURIComponent(inputValue)}`)
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        const baseURL = isDevelopment ? 'http://127.0.0.1:5000' : 'https://yourateapi.onrender.com';
+
+        fetch(`${baseURL}/number?video_id=${encodeURIComponent(inputValue)}`)
           .then((response) => response.json())
           .then((data) => {
             onNumberReceived(data);
@@ -32,7 +35,7 @@ interface InputBoxProps {
             console.error(error);
           });
 
-          fetch(`http://127.0.0.1:5000/ratio?video_id=${encodeURIComponent(inputValue)}`)
+          fetch(`${baseURL}/ratio?video_id=${encodeURIComponent(inputValue)}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data.positive)
@@ -44,7 +47,7 @@ interface InputBoxProps {
           });
 
 
-          fetch(`http://127.0.0.1:5000/trend?video_id=${encodeURIComponent(inputValue)}`)
+          fetch(`${baseURL}/trend?video_id=${encodeURIComponent(inputValue)}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data)
