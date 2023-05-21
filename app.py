@@ -37,6 +37,12 @@ def get_number():
     if match:
         video_id = match.group(1)
     else:
+        pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
+        match = re.search(pattern, request.args.get('video_id'))
+        if match:
+            video_id = match.group(1)
+        else:
+            print("Video ID not found.")
         print("Video ID not found.")
 
     # video_id = request.args.get('video_id')
@@ -80,6 +86,12 @@ def get_ratio():
     if match:
         video_id = match.group(1)
     else:
+        pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
+        match = re.search(pattern, request.args.get('video_id'))
+        if match:
+            video_id = match.group(1)
+        else:
+            print("Video ID not found.")
         print("Video ID not found.")
 
     # video_id = request.args.get('video_id')
@@ -126,19 +138,19 @@ def get_trend():
     if match:
         video_id = match.group(1)
     else:
+        pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
+        match = re.search(pattern, request.args.get('video_id'))
+        if match:
+            video_id = match.group(1)
+        else:
+            print("Video ID not found.")
         print("Video ID not found.")
-
-    # video_id = request.args.get('video_id')
 
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
         videoId = video_id
     )
     response = comment_request.execute()
-    
-    total_positive = 0
-    total_negative = 0
-    
     data_list = []
 
     for item in response['items']:
@@ -153,7 +165,7 @@ def get_trend():
 
     json_data = jsonify(data_list)
 
-    return json_data
+    return json_data    
 
 if __name__ == '__main__':
     app.run()
