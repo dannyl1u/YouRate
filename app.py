@@ -1,13 +1,14 @@
 import os
-
 import googleapiclient.discovery
 import re
 from textblob import TextBlob
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
 from dotenv import load_dotenv
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+import pandas as pd
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -60,6 +61,11 @@ def get_number():
     print("AVERAGE SCORE = ")
     print(total_score/count)
     return jsonify(total_score/count)
+
+    
+
+
+
 
 if __name__ == '__main__':
     app.run()
