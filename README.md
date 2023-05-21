@@ -1,6 +1,6 @@
 # YouRate
 
-Now live at https://yourateweb.onrender.com 🚀
+Now live at https://yourateweb.onrender.com 🚢
 
 ## Inspiration
 It's 11am May 20, 2023, and you have 1 hour left until you start your Stormhacks project. Your team asks you to create a React app (sounds simple enough), although one problem, you have never used React. You head over to YouTube and look for a tutorial. You find countless different tutorials, all close to an hour in length, which one will you choose? You don't have time to waste watching a bad tutorial. YouTube removed the dislike button in 2021, so how do you tell what's good? You could scroll through the comments, but that in itself could take an hour...
@@ -24,14 +24,14 @@ The limited timeframe of the hackathon prevented us from incorporating all the f
 We are proud to have created a robust and user-friendly app that simplifies the video discovery process on YouTube. We successfully deployed our MVP to the cloud, so we are now able to receive feedback from the community for future features and implementations.
 
 ## What we learned
-The power of Natural Language Processing
-Data analysis and visualization techniques/tools
-We learned which YouTube videos were worth watching by leveraging our own app :D
-We gathered feedback from content creators that they are interested in using the product to analyze their own content
+✅The power of Natural Language Processing<br>
+✅Data analysis and visualization techniques/tools<br>
+✅We learned which YouTube videos were worth watching by leveraging our own app :D<br>
+✅We gathered feedback from content creators that they are interested in using the product to analyze their own content<br>
 
 ## What's next for YouRate
-More data visualizations (e.g. word cloud, sentiment over time)
-Chrome/Firefox extension
-Modernize UI, including embedded videos using the existing YouTube API
-Gather community feedback
-Account integration with search history
+🚀 More data visualizations (e.g. word cloud, sentiment over time) <br>
+🚀 Chrome/Firefox extension<br>
+🚀 Modernize UI, including embedded videos using the existing YouTube API<br>
+🚀 Gather community feedback<br>
+🚀 Account integration with search history<br>
