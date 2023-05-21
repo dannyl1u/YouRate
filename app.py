@@ -1,13 +1,14 @@
 import os
-
 import googleapiclient.discovery
 import re
 from textblob import TextBlob
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
 from dotenv import load_dotenv
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+import pandas as pd
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,8 +18,7 @@ DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 
 app = Flask(__name__)
 CORS(app)
-
-
+all_comments = []
 
 @app.route('/number')
 def get_number():
@@ -53,7 +53,7 @@ def get_number():
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
         print("=====================================")
-        print(text_display)
+        all_comments.append(text_display)
         count+=1
         total_score += TextBlob(text_display).sentiment.polarity
         print(TextBlob(text_display).sentiment.polarity)
@@ -61,6 +61,11 @@ def get_number():
     print("AVERAGE SCORE = ")
     print(total_score/count)
     return jsonify(total_score/count)
+
+    
+
+
+
 
 if __name__ == '__main__':
     app.run()
