@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import InputBox from './components/InputBox';
 import NumberDisplay from './components/NumberDisplay';
+import 'bootstrap/dist/css/bootstrap.css';
+
+
 
 function App(): JSX.Element {
   const [number, setNumber] = useState<number | null>(null);
@@ -15,6 +18,7 @@ function App(): JSX.Element {
       <InputBox headerText="Enter below:" onNumberReceived={handleNumberReceived} />
       {number !== null && <NumberDisplay number={number} />}
     </div>
+
   );
 }
 
