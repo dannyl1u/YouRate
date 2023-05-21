@@ -5,9 +5,7 @@ interface NumberDisplayProps {
   const NumberDisplay = ({ number }: NumberDisplayProps) => {
     return (
       <div>
-        <h3>Score (-1 is bad, 1 is good): 
-          <br/>
-          {number}
+        <h3>Score (between -1 and 1) = {number.toFixed(3)}
         </h3>
       </div>
     );

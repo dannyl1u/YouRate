@@ -31,6 +31,7 @@ def get_number():
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey = DEVELOPER_KEY)
     
+    video_id=""
     pattern = r"v=([^&]+)"
     match = re.search(pattern, request.args.get('video_id'))
     if match:
@@ -69,11 +70,11 @@ def get_ratio():
 
     api_service_name = "youtube"
     api_version = "v3"
-    
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey = DEVELOPER_KEY)
     
+    video_id=""
     pattern = r"v=([^&]+)"
     match = re.search(pattern, request.args.get('video_id'))
     if match:
@@ -107,6 +108,52 @@ def get_ratio():
     response = jsonify(positive=total_positive, negative=total_negative)     
     return response
 
+
+
+@app.route('/trend')
+def get_trend():
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+    api_service_name = "youtube"
+    api_version = "v3"
+
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, developerKey = DEVELOPER_KEY)
+    
+    video_id=""
+    pattern = r"v=([^&]+)"
+    match = re.search(pattern, request.args.get('video_id'))
+    if match:
+        video_id = match.group(1)
+    else:
+        print("Video ID not found.")
+
+    # video_id = request.args.get('video_id')
+
+    comment_request = youtube.commentThreads().list(
+        part="id,snippet",
+        videoId = video_id
+    )
+    response = comment_request.execute()
+    
+    total_positive = 0
+    total_negative = 0
+    
+    data_list = []
+
+    for item in response['items']:
+        text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
+        date_posted = item['snippet']['topLevelComment']['snippet']['publishedAt']
+        score = TextBlob(text_display).sentiment.polarity
+        data = {
+            'date': date_posted,
+            'score': score
+        }
+        data_list.append(data)
+
+    json_data = jsonify(data_list)
+
+    return json_data
 
 if __name__ == '__main__':
     app.run()
