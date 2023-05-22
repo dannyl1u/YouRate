@@ -30,8 +30,8 @@ We are proud to have created a robust and user-friendly app that simplifies the 
 ✅We gathered feedback from content creators that they are interested in using the product to analyze their own content<br>
 
 ## What's next for YouRate
-🚀 More data visualizations (e.g. word cloud, sentiment over time) <br>
-🚀 Chrome/Firefox extension<br>
-🚀 Modernize UI, including embedded videos using the existing YouTube API<br>
-🚀 Gather community feedback<br>
-🚀 Account integration with search history<br>
+📊 More data visualizations (e.g. word cloud, sentiment over time) <br>
+🛜 Chrome/Firefox extension<br>
+</> Modernize UI, including embedded videos using the existing YouTube API<br>
+👍 Gather community feedback<br>
+🔎 Account integration with search history<br>
