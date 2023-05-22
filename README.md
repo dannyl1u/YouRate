@@ -1,4 +1,4 @@
-# YouRate
+# YouRate - Stormhacks 2023 Hackathon Submission
 
 Now live at https://yourateweb.onrender.com 🚢
 
