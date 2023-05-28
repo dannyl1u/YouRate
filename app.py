@@ -1,12 +1,9 @@
 import os
-
 import googleapiclient.discovery
 import re
 from textblob import TextBlob
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -18,35 +15,26 @@ DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 app = Flask(__name__)
 CORS(app)
 
-
-
-@app.route('/number')
-def get_number():
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-    
-
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey = DEVELOPER_KEY)
-    
-    video_id=""
+def api_call(video_id):
     pattern = r"v=([^&]+)"
-    match = re.search(pattern, request.args.get('video_id'))
+    match = re.search(pattern, video_id)
     if match:
         video_id = match.group(1)
     else:
         pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
-        match = re.search(pattern, request.args.get('video_id'))
+        match = re.search(pattern, video_id)
         if match:
             video_id = match.group(1)
         else:
             print("Video ID not found.")
-        print("Video ID not found.")
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-    # video_id = request.args.get('video_id')
+    api_service_name = "youtube"
+    api_version = "v3"
 
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, developerKey = DEVELOPER_KEY)
+    
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
         videoId = video_id
@@ -54,8 +42,13 @@ def get_number():
     response = comment_request.execute()
     print(response)
 
-    total_score = 0
+    return response
+
+@app.route('/number')
+def get_number():
+    response = api_call(request.args.get('video_id'))
     count = 0
+    total_score = 0
     
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
@@ -69,44 +62,14 @@ def get_number():
     print(total_score/count)
     return jsonify(total_score/count)
 
-
 @app.route('/ratio')
 def get_ratio():
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey = DEVELOPER_KEY)
-    
-    video_id=""
-    pattern = r"v=([^&]+)"
-    match = re.search(pattern, request.args.get('video_id'))
-    if match:
-        video_id = match.group(1)
-    else:
-        pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
-        match = re.search(pattern, request.args.get('video_id'))
-        if match:
-            video_id = match.group(1)
-        else:
-            print("Video ID not found.")
-        print("Video ID not found.")
-
-    # video_id = request.args.get('video_id')
-
-    comment_request = youtube.commentThreads().list(
-        part="id,snippet",
-        videoId = video_id
-    )
-    response = comment_request.execute()
-    print(response)
+    response = api_call(request.args.get('video_id'))
 
     total_score = 0
     count = 0
-    total_positive = 0
     total_negative = 0
+    total_positive = 0
     
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
@@ -120,37 +83,9 @@ def get_ratio():
     response = jsonify(positive=total_positive, negative=total_negative)     
     return response
 
-
-
 @app.route('/trend')
 def get_trend():
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey = DEVELOPER_KEY)
-    
-    video_id=""
-    pattern = r"v=([^&]+)"
-    match = re.search(pattern, request.args.get('video_id'))
-    if match:
-        video_id = match.group(1)
-    else:
-        pattern = r"(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})"
-        match = re.search(pattern, request.args.get('video_id'))
-        if match:
-            video_id = match.group(1)
-        else:
-            print("Video ID not found.")
-        print("Video ID not found.")
-
-    comment_request = youtube.commentThreads().list(
-        part="id,snippet",
-        videoId = video_id
-    )
-    response = comment_request.execute()
+    response = api_call(request.args.get('video_id'))
     data_list = []
 
     for item in response['items']:
