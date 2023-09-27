@@ -1,4 +1,5 @@
 import { Chart } from 'react-google-charts';
+import '../App.css'
 
 interface ThermometerProps {
     score: number;
@@ -14,28 +15,20 @@ const Thermometer = ({ score }: ThermometerProps) => {
     ];
   
     const options = {
-      width: 400,
-      height: 120,
-      redFrom: -1,
-      redTo: -0.5,
-      yellowFrom: -0.5,
-      yellowTo: 0,
-      greenFrom: 0,
-      greenTo: 0.5,
-      blueFrom: 0.5,
-      blueTo: 1,
       minorTicks: 5,
     };
   
     return (
+      
+<div className='thermometer'>
+<h3>Sentiment</h3>
       <Chart
         chartType="Gauge"
         data={data}
         options={options}
-        width="100%"
-        height="100%"
-        className='thermometer'
       />
+    </div>
+     
     );
   };
   
