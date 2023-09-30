@@ -61,8 +61,10 @@ interface InputBoxProps {
       return (
         <div>
           <h4>{headerText}</h4>
-          <input  style={{ width: "500px" }}  type="text" onChange={handleChange} placeholder="e.g. https://www.youtube.com/watch?v=YHUv-oOMwRA&t=0s&ab_channel=REI" />
-          <button onClick={handleSubmit}>Enter</button>
+          <div className='d-flex'>
+            <input className="form-control rounded mr-2"  style={{ width: "500px" }}  type="text" onChange={handleChange} placeholder="e.g. https://www.youtube.com/watch?v=YHUv-oOMwRA&t=0s&ab_channel=REI" />
+            <button className="btn btn-primary mt-2 ml-2" onClick={handleSubmit}>Enter</button>
+          </div>
         </div>
       );
     };
