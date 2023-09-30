@@ -13,7 +13,6 @@ DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 app = Flask(__name__)
 CORS(app)
 
-# Define your YouTube API service outside of the api_call function
 api_service_name = "youtube"
 api_version = "v3"
 
@@ -48,12 +47,10 @@ def load_comments(match):
         comment = item["snippet"]["topLevelComment"]
         author = comment["snippet"]["authorDisplayName"]
         text = comment["snippet"]["textDisplay"]
-        print("Comment by {}: {}".format(author, text))
         if 'replies' in item.keys():
             for reply in item['replies']['comments']:
                 rauthor = reply['snippet']['authorDisplayName']
                 rtext = reply["snippet"]["textDisplay"]
-                print("\n\tReply by {}: {}".format(rauthor, rtext), "\n")
 
 def get_comment_threads(video_id, page_token=None):
     results = youtube.commentThreads().list(
@@ -63,6 +60,7 @@ def get_comment_threads(video_id, page_token=None):
         textFormat="plainText",
         pageToken=page_token  # Add page_token to get the next page of comments
     ).execute()
+
     return results
 
 @app.route('/number')
@@ -74,14 +72,9 @@ def get_number():
 
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
-        print("=====================================")
-        print(text_display)
         count += 1
         total_score += TextBlob(text_display).sentiment.polarity
-        print(TextBlob(text_display).sentiment.polarity)
 
-    print("AVERAGE SCORE = ")
-    print(total_score / count)
     return jsonify(total_score / count)
 
 @app.route('/ratio')
