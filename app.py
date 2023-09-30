@@ -45,11 +45,10 @@ def get_number():
             print("Video ID not found.")
         print("Video ID not found.")
 
-    # video_id = request.args.get('video_id')
-
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
-        videoId = video_id
+        videoId = video_id,
+        maxResults = 100
     )
     response = comment_request.execute()
     print(response)
@@ -98,7 +97,8 @@ def get_ratio():
 
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
-        videoId = video_id
+        videoId = video_id,
+        maxResults = 100
     )
     response = comment_request.execute()
     print(response)
@@ -148,7 +148,8 @@ def get_trend():
 
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
-        videoId = video_id
+        videoId = video_id,
+        maxResults = 100
     )
     response = comment_request.execute()
     data_list = []
