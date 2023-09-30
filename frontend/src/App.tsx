@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Thermometer from './components/Thermometer';
 import RatioComponent from './components/Ratio';
 import './App.css';
-import logo from './assets/Logo.png';
+// import logo from './assets/Logo.png';
 
 function App(): JSX.Element {
   const [number, setNumber] = useState<number | null>(null);
