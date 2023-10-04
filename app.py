@@ -1,13 +1,13 @@
 import os
-
 import googleapiclient.discovery
 import re
 from textblob import TextBlob
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
 from dotenv import load_dotenv
+import redis
+
+redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,8 +17,6 @@ DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 
 app = Flask(__name__)
 CORS(app)
-
-
 
 @app.route('/number')
 def get_number():
@@ -45,27 +43,30 @@ def get_number():
             print("Video ID not found.")
         print("Video ID not found.")
 
+    cached_result = redis_client.get(video_id)
+
+    if cached_result:
+        print("Cache hit! Returning cached result")
+        return jsonify(float(cached_result.decode('utf-8')))
+    
     comment_request = youtube.commentThreads().list(
         part="id,snippet",
         videoId = video_id,
         maxResults = 100
     )
     response = comment_request.execute()
-    print(response)
 
     total_score = 0
     count = 0
     
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
-        print("=====================================")
-        print(text_display)
         count+=1
         total_score += TextBlob(text_display).sentiment.polarity
-        print(TextBlob(text_display).sentiment.polarity)
         
-    print("AVERAGE SCORE = ")
-    print(total_score/count)
+    cache_ttl = 3600  # Cache for 1 hour (or adjust as needed)
+    redis_client.setex(video_id, cache_ttl, total_score/count)
+    print("New video! Storing in cache...")
     return jsonify(total_score/count)
 
 
@@ -101,7 +102,6 @@ def get_ratio():
         maxResults = 100
     )
     response = comment_request.execute()
-    print(response)
 
     total_score = 0
     count = 0
