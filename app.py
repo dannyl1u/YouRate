@@ -6,6 +6,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 import redis
+import time
 
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -20,6 +21,7 @@ CORS(app)
 
 @app.route('/number')
 def get_number():
+    start_time = time.time()
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     api_service_name = "youtube"
@@ -47,6 +49,9 @@ def get_number():
 
     if cached_result:
         print("Cache hit! Returning cached result")
+        end_time = time.time()  
+        duration = end_time - start_time 
+        print(f"Request took {duration:.2f} seconds.")  
         return jsonify(float(cached_result.decode('utf-8')))
     
     comment_request = youtube.commentThreads().list(
@@ -64,9 +69,12 @@ def get_number():
         count+=1
         total_score += TextBlob(text_display).sentiment.polarity
         
-    cache_ttl = 3600  # Cache for 1 hour (or adjust as needed)
+    cache_ttl = 3600  
     redis_client.setex(video_id, cache_ttl, total_score/count)
     print("New video! Storing in cache...")
+    end_time = time.time()  
+    duration = end_time - start_time 
+    print(f"Request took {duration:.2f} seconds.")
     return jsonify(total_score/count)
 
 
