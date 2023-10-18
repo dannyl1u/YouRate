@@ -51,21 +51,22 @@ def get_number():
         maxResults = 100
     )
     response = comment_request.execute()
-    print(response)
+    print(video_id)
+    # print(response)
 
     total_score = 0
     count = 0
     
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
-        print("=====================================")
-        print(text_display)
+        # print("=====================================")
+        # print(text_display)
         count+=1
         total_score += TextBlob(text_display).sentiment.polarity
-        print(TextBlob(text_display).sentiment.polarity)
+        # print(TextBlob(text_display).sentiment.polarity)
         
-    print("AVERAGE SCORE = ")
-    print(total_score/count)
+    # print("AVERAGE SCORE = ")
+    # print(total_score/count)
     return jsonify(total_score/count)
 
 
@@ -101,7 +102,7 @@ def get_ratio():
         maxResults = 100
     )
     response = comment_request.execute()
-    print(response)
+    # print(response)
 
     total_score = 0
     count = 0
