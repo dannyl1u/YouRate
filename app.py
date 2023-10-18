@@ -8,17 +8,35 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from dotenv import load_dotenv
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from datetime import datetime
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Access the API key
 DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 
 app = Flask(__name__)
 CORS(app)
 
+def setup_gspread():
+    scope = [
+        "https://spreadsheets.google.com/feeds", 
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive.file", 
+        "https://www.googleapis.com/auth/drive"
+    ]
 
+    creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+    client = gspread.authorize(creds)
+    sheet = client.open("YouRate").sheet1
+    return sheet
+
+def insert_video_id_to_sheet(video_id):
+    sheet = setup_gspread()
+    current_timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    full_video_url = f"https://www.youtube.com/watch?v={video_id}"
+    sheet.append_row([full_video_url, current_timestamp])
 
 @app.route('/number')
 def get_number():
@@ -50,6 +68,7 @@ def get_number():
         videoId = video_id,
         maxResults = 100
     )
+    insert_video_id_to_sheet(video_id)
     response = comment_request.execute()
     print(video_id)
     # print(response)
@@ -102,7 +121,6 @@ def get_ratio():
         maxResults = 100
     )
     response = comment_request.execute()
-    # print(response)
 
     total_score = 0
     count = 0
@@ -120,7 +138,6 @@ def get_ratio():
 
     response = jsonify(positive=total_positive, negative=total_negative)     
     return response
-
 
 
 @app.route('/trend')
