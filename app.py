@@ -12,6 +12,8 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
+from services.GoogleSheetsFacade import GoogleSheet
+
 load_dotenv()
 
 DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
@@ -19,24 +21,12 @@ DEVELOPER_KEY = os.getenv("DEVELOPER_KEY")
 app = Flask(__name__)
 CORS(app)
 
-def setup_gspread():
-    scope = [
-        "https://spreadsheets.google.com/feeds", 
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive.file", 
-        "https://www.googleapis.com/auth/drive"
-    ]
+google_sheet = GoogleSheet()
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-    client = gspread.authorize(creds)
-    sheet = client.open("YouRate").sheet1
-    return sheet
-
-def insert_video_id_to_sheet(video_id):
-    sheet = setup_gspread()
+def insert_video_id_to_sheet(video_id, google_sheet):
     current_timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     full_video_url = f"https://www.youtube.com/watch?v={video_id}"
-    sheet.append_row([full_video_url, current_timestamp])
+    google_sheet.append_to_sheet([full_video_url, current_timestamp])
 
 @app.route('/number')
 def get_number():
@@ -68,24 +58,17 @@ def get_number():
         videoId = video_id,
         maxResults = 100
     )
-    insert_video_id_to_sheet(video_id)
+    insert_video_id_to_sheet(video_id, google_sheet)
     response = comment_request.execute()
     print(video_id)
-    # print(response)
-
     total_score = 0
     count = 0
     
     for item in response['items']:
         text_display = item['snippet']['topLevelComment']['snippet']['textDisplay']
-        # print("=====================================")
-        # print(text_display)
         count+=1
         total_score += TextBlob(text_display).sentiment.polarity
-        # print(TextBlob(text_display).sentiment.polarity)
         
-    # print("AVERAGE SCORE = ")
-    # print(total_score/count)
     return jsonify(total_score/count)
 
 
