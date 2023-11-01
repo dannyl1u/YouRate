@@ -1,6 +1,7 @@
 # YouRate - Stormhacks 2023 Hackathon Submission
 
 Now live at https://yourateweb.onrender.com 🚢
+![image](https://github.com/dannyl1u/YouRate/assets/45186464/ec6425bd-4996-4525-829e-3ba8568da48c)
 
 ## Inspiration
 It's 11am May 20, 2023, and you have 1 hour left until you start your Stormhacks project. Your team asks you to create a React app (sounds simple enough), although one problem, you have never used React. You head over to YouTube and look for a tutorial. You find countless different tutorials, all close to an hour in length, which one will you choose? You don't have time to waste watching a bad tutorial. YouTube removed the dislike button in 2021, so how do you tell what's good? You could scroll through the comments, but that in itself could take an hour...
